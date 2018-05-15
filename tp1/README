@@ -1,0 +1,13 @@
+Nome: Gabriel Martins Silva
+Matrícula: 92539
+
+- A classe não foi implementada com todas funcionalidades.
+  a) Na função adicionaForma() o programa não se preocupa em saber se o local
+    onde a peça será colocada é valido ou não. Se tentar colocar uma peça onde
+    já tem outra a peça anterior será sobrescrita com a nova.
+
+  b) A sobrecarga do operador "=" não esta funcionando corretamente.
+
+- Devido aos diversos erros encontrados e a falta de algumas funcionalidades,
+não foi possível testar a Classe no jogoTetris.cpp. Apenas foi utilizado um
+programa separado feito por mim para testar cada função dentro de suas limitações.
