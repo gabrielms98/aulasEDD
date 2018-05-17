@@ -3,8 +3,6 @@
 using namespace std;
 
 
-
-
 #include "MyList2NewIterator.h"
 
 //Etapa 1: Adicione sua implementacao de "reverse" antes da funcao "testaReverse"
@@ -97,10 +95,10 @@ void testaRange() {
 
 int main() {
 	//Etapa 1: implemente a funcao reverse()
-	//testaReverse();
+	testaReverse();
 
 	//Etapa 2: descomente o codigo abaixo (mantenha o codigo da etapa 1 descomentado...)
-	//testaDecrementoEnd();
+	testaDecrementoEnd();
 
 	//Etapa 3: descomente o codigo abaixo (mantenha o codigo das etapas 1 e 2 descomentado...)
 	testaRange();

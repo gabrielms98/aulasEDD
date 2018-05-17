@@ -1,39 +1,135 @@
+#ifndef RANGE_H
+#define RANGE_H
+
 #include <iostream>
 
-class IteratorRange;
+using namespace std;
 
-class Range{
+class Nodo{
 public:
-  friend IteratorRange;
-  typedef IteratorRange iterator;
+  Nodo(const int elem) : data(elem), next(NULL) {}
 
-	Range(int x_, int y_);
-
-  //iterator begin() {return &intervalo[x-1];}
-  //iterator end() {return &intervalo[y];}
-
-	int x, y;
-	int *intervalo;
-
-
+  int data;
+  Nodo *next;
 };
 
 class IteratorRange{
   friend class Range;
+
 public:
-  IteratorRange(Range &range_) : range(range_) {}
+  IteratorRange(Nodo *node): ptr(node) {}
 
-  int operator*() {return ;}
+  int &operator*() {return ptr->data;}
+  const int &operator*() const {return ptr->data;}
 
+  bool operator==(const IteratorRange &other) const {return ptr==other.ptr;}
+  bool operator!=(const IteratorRange &other) const {return ptr!=other.ptr;}
+
+  IteratorRange operator++();
+  // IteratorRange operator--();
+
+  IteratorRange operator++(int);
+  // IteratorRange operator--(int);
 
 private:
-  Range range;
+  Nodo *ptr;
 };
 
-//template<class T>
-Range::Range(int x_, int y_){
-	intervalo = new int[y_-1];
-	for(int i=x_; i<=y_; i++){
-		intervalo[i] = i;
-	}
+class Range{
+public:
+
+  friend IteratorRange;
+  typedef IteratorRange iterator;
+
+  Range(int, int);
+  Range(const Range&);
+
+  Range &operator=(const Range&);
+
+  iterator begin() {return iterator(dataFirst);};
+  iterator end() {return iterator(NULL);};
+
+  void push_back(int elem);
+
+  void clear();
+
+private:
+  void create();
+  void destroy();
+  void destroy(Nodo *elem);
+
+  Nodo *dataFirst, *dataLast;
+  int dataSize;
+};
+
+IteratorRange IteratorRange::operator++(){
+  ptr = ptr->next;
+  return ptr;
 }
+
+IteratorRange IteratorRange::operator++(int){
+  IteratorRange oldIt= *this;
+  ptr = ptr->next;
+  return oldIt;
+}
+
+void Range::create(){
+  dataFirst = dataLast  = NULL;
+  dataSize = 0;
+}
+
+void Range::destroy(Nodo *elem){
+  if(elem == NULL) return;
+  destroy(elem->next);
+  delete elem;
+}
+
+void Range::destroy(){
+  dataSize = 0;
+  destroy(dataFirst);
+}
+
+void Range::clear(){
+  destroy();
+  create();
+}
+
+Range::Range(int x, int y){
+  create();
+  dataSize = y-x;
+  for(int i=x; i<=y; i++) push_back(i);
+}
+
+Range::Range(const Range &other){
+  create();
+  *this = other;
+}
+
+Range & Range::operator=(const Range &other){
+  if(this==&other) return *this;
+	clear(); //Exercicio: por que precisamos disso?
+
+  if(other.dataFirst == NULL) {
+  	dataFirst = dataLast = NULL;
+  } else {
+   Nodo *curr = other.dataFirst;
+		while(curr!=NULL) { //equivalente a "while(curr)"
+		  push_back(curr->data);
+			curr = curr->next; //avance para o proximo nodo
+		}
+  }
+	return *this;
+
+}
+
+void Range::push_back(int elem){
+  if(dataFirst==NULL) { //caso especial: lista inicialmente vazia
+    dataFirst = dataLast = new Nodo(elem);
+  } else {
+    dataLast->next = new Nodo(elem);
+    dataLast = dataLast->next;
+  }
+  dataSize++;
+}
+
+#endif
