@@ -74,7 +74,7 @@ void MyPriorityQueue<T>::push(const T &el){
 
 template<class T>
 void MyPriorityQueue<T>::pop(){
-  // NAO SEI SE TA CERTO
+  // NAO SEI SE ESTA CERTO
   heap.erase(heap[0]);
   heap.push_front(heap[size()-1]);
   heap.erase(heap[size()-1]);
