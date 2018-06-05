@@ -12,17 +12,40 @@ class MySetIterator;
 
 template<class T>
 class Node{
-  //Node;
-  Node *left, *right;
+  Node(const T &el) : elem(el), left(NULL), right(NULL) {}
+  Node<T> *left, *right;
+  T elem;
 };
 
 template<class T>
 class MySet{
+typedef MySetIterator<T> iterator;
 
+public:
+  int size() const; //O(1)
+  MySet() : size(0), root(NULL) {}
+
+  ~MySet();
+
+  pair<iterator, bool> insert(const T&elem); //O(h) sendo h = altura,h=O(log n)
+  iterator find(const T&elem);
+
+  iterator end() {return iterator(NULL);};
 
 private:
   Node<T> *root;
   int size;
+
+  pair<iterator, bool> insert(const T&elem, Node<T> *&root);
+  iterator find(const T&elem, Node<T> *raiz)
+
+  void destroy(Node<T> *root);
+
+  Node<T> *createCopy(Node<T> *root) const;
+
+  void imprimiPreOrdem(Node<T> *root) const;
+  void imprimiInOrdem(Node<T> *root) const;
+  void imprimiPosOrdem(Node<T> *root) const;
 };
 
 template<class T>
@@ -32,6 +55,23 @@ class MySetIterator{
 private:
   Node<T> *ptr;
 };
+
+//O(n)
+template<class T>
+void MySet<T>::destroy(Node<T> *root){
+  if(root == NULL) return;
+
+  destroy(root->left);
+  destroy(root->right);
+  delete root;
+}
+
+template<class T>
+MySet<T>::~MySet(){
+  destroy(root);
+  root = NULL;
+  size=0;
+}
 
 template<class T>
 typename MySet<T>::iterator find(const T &el, const Node<T> *raiz){
@@ -44,6 +84,12 @@ typename MySet<T>::iterator find(const T &el, const Node<T> *raiz){
 template<class T>
 typename MySet<T>::iterator MySet<T>::find(const T &el){
   return find(el, root);
+}
+
+//funcao find(T) iterativa
+template<class T>
+typename MySet<T>::iterator MySet<T>::find(const T &el){
+
 }
 
 template<class T>
@@ -63,6 +109,46 @@ template<class T>
 pair<typename MySet<T>::iterator, bool> MySet<T>::insert(const T&el){
   return insert(el, root);
 }
+
+//O(n)
+template<class T>
+Node<T> MySet<T>::*createCopy(Node<T> *root) const{
+  if(root == NULL) return root;
+  Node<T> *newRoot = new Node<T>(root->elem);
+  newRoot->left = createCopy(root->left);
+  newRoot->right = createCopy(root->right);
+
+  return newRoot;
+}
+
+void imprimiPreOrdem(Node<T> *root) const{
+  if(root == NULL) return;
+
+  cout << root->elem << endl; //visita
+
+  imprimiPreOrdem(root->left);
+  imprimiPreOrdem(root->right);
+
+}
+
+void imprimiInOrdem(Node<T> *root) const{
+  if(root == NULL) return;
+
+  imprimiInOrdem(root->left);
+  cout << root->elem << endl; //visita
+  imprimiInOrdem(root->right);
+
+}
+
+void imprimiPosOrdem(Node<T> *root) const{
+  if(root == NULL) return;
+
+  imprimiPosOrdem(root->left);
+  imprimiPosOrdem(root->right);
+
+  cout << root->elem << endl; //visita
+}
+
 
 /*
 template<class T>
