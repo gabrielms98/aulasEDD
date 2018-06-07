@@ -1,6 +1,5 @@
 //Conjunto + Arvore Binaria de Pesquisa (ABP)
 
-
 #ifndef MYSETLIST_H
 #define MYSETLIST_H
 
@@ -12,8 +11,9 @@ class MySetIterator;
 
 template<class T>
 class Node{
-  Node(const T &el) : elem(el), left(NULL), right(NULL) {}
+  Node(const T &el) : elem(el), left(NULL), right(NULL), parent(NULL) {}
   Node<T> *left, *right;
+  Node<T> *parent;
   T elem;
 };
 
@@ -36,12 +36,12 @@ private:
   Node<T> *root;
   int size;
 
-  pair<iterator, bool> insert(const T&elem, Node<T> *&root);
+  pair<iterator, bool> insert(const T&elem, Node<T> *&root, Node<T> * &parent);
   iterator find(const T&elem, Node<T> *raiz)
 
   void destroy(Node<T> *root);
 
-  Node<T> *createCopy(Node<T> *root) const;
+  Node<T> *createCopy(const Node<T> *root, Node<T>*parentOfCopy) const;
 
   void imprimiPreOrdem(Node<T> *root) const;
   void imprimiInOrdem(Node<T> *root) const;
@@ -87,20 +87,21 @@ typename MySet<T>::iterator MySet<T>::find(const T &el){
 }
 
 //funcao find(T) iterativa
-template<class T>
+/*template<class T>
 typename MySet<T>::iterator MySet<T>::find(const T &el){
 
-}
+}*/
 
 template<class T>
-pair<typename MySet<T>::iterator, bool> MySet<T>::insert(const T&el, Node<T> * &root){
+pair<typename MySet<T>::iterator, bool> MySet<T>::insert(const T&el, Node<T> * &root, Node<T> * &parent){
   if(!root){
     root = new Node<T>(elem);
+    root->parent = parent;
     size++;
     return make_pair(iterator(root), true);
   } else {
-    if(root->elem > el) return insert(el, root->left);
-    else if(root->elem < el) return insert(el, root->right);
+    if(root->elem > el) return insert(el, root->left, root);
+    else if(root->elem < el) return insert(el, root->right, root);
     else return make_pair(iterator(root), false);
   }
 }
@@ -112,16 +113,16 @@ pair<typename MySet<T>::iterator, bool> MySet<T>::insert(const T&el){
 
 //O(n)
 template<class T>
-Node<T> MySet<T>::*createCopy(Node<T> *root) const{
+Node<T> * MySet<T>::createCopy(const Node<T> *root, Node<T>*parentOfCopy) const{
   if(root == NULL) return root;
   Node<T> *newRoot = new Node<T>(root->elem);
-  newRoot->left = createCopy(root->left);
-  newRoot->right = createCopy(root->right);
+  newRoot->left = createCopy(root->left, newRoot);
+  newRoot->right = createCopy(root->right, newRoot);
 
   return newRoot;
 }
 
-void imprimiPreOrdem(Node<T> *root) const{
+void MySet<T>::imprimiPreOrdem(Node<T> *root) const{
   if(root == NULL) return;
 
   cout << root->elem << endl; //visita
@@ -131,7 +132,7 @@ void imprimiPreOrdem(Node<T> *root) const{
 
 }
 
-void imprimiInOrdem(Node<T> *root) const{
+void MySet<T>::imprimiInOrdem(Node<T> *root) const{
   if(root == NULL) return;
 
   imprimiInOrdem(root->left);
@@ -140,7 +141,7 @@ void imprimiInOrdem(Node<T> *root) const{
 
 }
 
-void imprimiPosOrdem(Node<T> *root) const{
+void MySet<T>::imprimiPosOrdem(Node<T> *root) const{
   if(root == NULL) return;
 
   imprimiPosOrdem(root->left);

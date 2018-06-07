@@ -41,48 +41,43 @@ void etapa1() {
 // Insira aqui o codigo para a etapa 2....
 
 void etapa2() {
+	MyStack<char> s;
 	string st;
 	cin >> st;
-	MyStack<char> s;
 
-  for(int i=0; i<st.size()-1; i++) {
-    char c = st[i];
-    switch(c) {
-      case '(':
-        s.push(c);
-        break;
-      case '[':
-        s.push(c);
-        break;
-      case '{':
-        s.push(c);
-        break;
-      case ')':
-        if(s.empty() || s.top()!='('){
-          cout << "Incosistente" << endl;
-          return;
-        }
-        s.pop();
-        break;
-      case ']':
-        if(s.empty() || s.top()!='['){
-          cout << "Incosistente" << endl;
-          return;
-        }
-        s.pop();
-        break;
-      case '}':
-        if(s.empty() || s.top()!='{'){
-          cout << "Incosistente" << endl;
-          return;
-        }
-        s.pop();
-        break;
-    }
-  }
-  if(s.empty()) cout << "Consistente" << endl;
-  else cout << "Inconsistente" << endl;
-  return;
+	for(int i=0; i<st.size(); i++){
+	char c = st[i];
+		switch(c) {
+			case '(':
+			case '[':
+			case '{':
+				s.push(c);
+				break;
+			case ')':
+				if(s.empty() || s.top()!='('){
+					cout << "Incosistente" << endl;
+					return;
+				}
+				s.pop();
+				break;
+			case ']':
+				if(s.empty() || s.top()!='['){
+					cout << "Incosistente" << endl;
+					return;
+				}
+				s.pop();
+				break;
+			case '}':
+				if(s.empty() || s.top()!='{'){
+					cout << "Incosistente" << endl;
+					return;
+				}
+				s.pop();
+				break;
+		}
+	}
+	 if(s.empty()) cout << "Consistente" << endl;
+	 else cout << "Incosistente" << endl;
 }
 
 //---------------------------------------

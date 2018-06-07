@@ -2,6 +2,7 @@
 #define MY_SET_LIST_H
 
 #include <algorithm> //classe pair esta aqui...
+#include <iostream>
 using namespace std;
 
 template<class T>
@@ -10,8 +11,10 @@ class MySetIterator;
 template  <class T>
 class Node {
 	public: //classe auxiliar.. vamos utiliza-la apenas neste arquivo (nao e' muito necessario ter encapsulamento)
-		Node(const T &elem_) : elem(elem_),left(NULL), right(NULL) {}
+		Node(const T &elem_) : elem(elem_),left(NULL), right(NULL), itemCount(1), subTreeSize(1) {}
 		Node<T> *left, *right;
+		int itemCount;
+		int subTreeSize;
 		T elem;
 };
 
@@ -27,6 +30,7 @@ public:
 
 	iterator end() {return iterator(NULL);}; //por enquanto nao vamos ter um metodo "begin()"
 
+	void printInOrdem() const;
 
 	MySet(const MySet &other);
 	MySet &operator=(const MySet &other);
@@ -37,12 +41,13 @@ private:
 
 
 	//funcoes auxiliares...
-	pair<iterator,bool> insert(const T&elem, Node<T> *&root); 
+	pair<iterator,bool> insert(const T&elem, Node<T> *&root);
 	iterator find(const T&elem, Node<T> *root);
 
 	void deleteNodes(Node<T> *root);
 	Node<T> * copyNodes(const Node<T> *root) const;
 
+	void printInOrdem(Node<T> *root) const;
 };
 
 
@@ -124,9 +129,17 @@ pair<typename MySet<T>::iterator,bool> MySet<T>::insert(const T&elem, Node<T> * 
 		size_++;
 		return make_pair(iterator(root),true);
 	} else {
-		if(root->elem > elem) return insert(elem, root->left);
-		else if (root->elem < elem) return insert(elem, root->right);
-		else return make_pair(iterator(root),false);//igual..
+		if(root->elem > elem) {
+			root->subTreeSize++;
+			return insert(elem, root->left);
+		}	else if (root->elem < elem) {
+			root->subTreeSize++;
+			return insert(elem, root->right);
+		} else {
+			root->subTreeSize++;
+			root->itemCount++;
+			return make_pair(iterator(root),false);//igual...
+		}
 	}
 }
 
@@ -140,7 +153,7 @@ pair<typename MySet<T>::iterator,bool> MySet<T>::insert(const T&elem) { //retorn
 //funcao auxiliar...
 template  <class T>
 typename MySet<T>::iterator MySet<T>::find(const T&elem, Node<T> *root) { //retorna um iterador para o elemento inserido (o valor booleano sera' true se o elemento nao existia no conjunto e falso caso ele ja exista (ou seja, o novo elemento nao foi inserido) ).
-	if(!root) {		
+	if(!root) {
 		return iterator(NULL);
 	} else {
 		if(root->elem > elem) return find(elem, root->left);
@@ -154,5 +167,20 @@ template  <class T>
 typename MySet<T>::iterator MySet<T>::find(const T&elem) {
 	find(elem,root);
 }
+
+template<class T>
+void MySet<T>::printInOrdem() const {
+	printInOrdem(root);
+}
+
+template<class T>
+void MySet<T>::printInOrdem(Node<T> *root) const{
+  if(root == NULL) return;
+
+  printInOrdem(root->left);
+	cout << "[elem: " << root->elem << ", count: " <<  root->itemCount << ", subSz: " << root->subTreeSize << "]" << endl; //visita
+  printInOrdem(root->right);
+}
+
 
 #endif
