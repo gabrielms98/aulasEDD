@@ -31,6 +31,7 @@ public:
 	iterator end() {return iterator(NULL);}; //por enquanto nao vamos ter um metodo "begin()"
 
 	void printInOrdem() const;
+	int qntMov(const T &elem);
 
 	MySet(const MySet &other);
 	MySet &operator=(const MySet &other);
@@ -180,6 +181,28 @@ void MySet<T>::printInOrdem(Node<T> *root) const{
   printInOrdem(root->left);
 	cout << "[elem: " << root->elem << ", count: " <<  root->itemCount << ", subSz: " << root->subTreeSize << "]" << endl; //visita
   printInOrdem(root->right);
+}
+
+template<class T>
+int MySet<T>::qntMov(const T&elem){
+	int mov = 0;
+	Node<T> *ptr = root;
+	while(ptr){
+		if(elem < ptr->elem){
+			if(ptr->right) mov += ptr->right->subTreeSize+ptr->itemCount;
+			else mov+=ptr->itemCount;
+			ptr = ptr->left;
+			continue;
+		} else if(elem > ptr->elem){
+			ptr = ptr->right;
+			continue;
+		} else if(elem == ptr->elem){
+			if(ptr->right) mov+=ptr->right->subTreeSize;
+			break;
+		}
+	}
+	//cout << "Número de movimentos para inseir o " << elem << " é: " << mov << endl;
+	return mov;
 }
 
 

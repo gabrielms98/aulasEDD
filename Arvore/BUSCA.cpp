@@ -31,7 +31,7 @@ void MySet<T>::imprimeBFS() const{
   while(!q.empty()){
     const Node<T> *p = q.front();
     q.pop();
-    // if(!p) continue;
+    if(!p) continue;
     cout << p->elem << " ";
     if(p->left) q.push(p->left);
     if(p->right) q.push(p->right);

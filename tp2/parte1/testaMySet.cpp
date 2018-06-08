@@ -14,30 +14,14 @@ void insere(MySet<int> &s, int elem) {
 
 int main() {
 	MySet<int> s;
-	/*(s,1);
+	insere(s,1);
 	insere(s,2);
 	insere(s,10);
 	insere(s,10); //repetidos..
 	insere(s,10); //repetidos..
 	insere(s,1);
-	*/
 
-	s.insert(8);
-	s.insert(4);
-	s.insert(15);
-	s.insert(3);
-	s.insert(7);
-	s.insert(5);
-	s.insert(5);
-	s.insert(18);
-	s.insert(4);
-	s.insert(4);
-	s.insert(15);
-
-
-	s.printInOrdem();
-
-	/*procura(s,1);
+	procura(s,1);
 	procura(s,2);
 	procura(s,10);
 	procura(s,20);
@@ -84,5 +68,5 @@ int main() {
 	s3.insert(123);
 	procura(s,123);
 	procura(s3,123);
-	*/
+
 }
