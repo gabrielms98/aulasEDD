@@ -13,8 +13,8 @@ class Node {
 	public: //classe auxiliar.. vamos utiliza-la apenas neste arquivo (nao e' muito necessario ter encapsulamento)
 		Node(const T &elem_) : elem(elem_),left(NULL), right(NULL), itemCount(1), subTreeSize(1) {}
 		Node<T> *left, *right;
-		int itemCount;
-		int subTreeSize;
+		long long int itemCount;
+		long long int subTreeSize;
 		T elem;
 };
 
@@ -31,7 +31,7 @@ public:
 	iterator end() {return iterator(NULL);}; //por enquanto nao vamos ter um metodo "begin()"
 
 	void printInOrdem() const;
-	int qntMov(const T &elem);
+	int qntMov(const T &elem) const;
 
 	MySet(const MySet &other);
 	MySet &operator=(const MySet &other);
@@ -184,19 +184,21 @@ void MySet<T>::printInOrdem(Node<T> *root) const{
 }
 
 template<class T>
-int MySet<T>::qntMov(const T&elem){
-	int mov = 0;
-	Node<T> *ptr = root;
-	while(ptr){
-		if(elem < ptr->elem){
-			if(ptr->right) mov += ptr->right->subTreeSize+ptr->itemCount;
-			else mov+=ptr->itemCount;
-			ptr = ptr->left;
-			continue;
-		} else if(elem > ptr->elem){
-			ptr = ptr->right;
+int MySet<T>::qntMov(const T&elem) const{
+	int mov = 0;  //define a quantidade de movimentos com 0. É incrementado a partir das comparaçoes entre o elem e o elemento do ptr atual
+	Node<T> *ptr = root; //inicializa o ptr como sendo o root
+	while(ptr){ //enquanto tiver Node, percorra a arvore
+		if(elem < ptr->elem){ //se o elemento for menor que a do Node atual, entao sabe-se que temos q "mover"
+		//todos os elementos que estao a direita (ou seja, maiores que ele) do ptr e tambem mover o ptr
+			if(ptr->right) mov += ptr->right->subTreeSize+ptr->itemCount; //se tiverem Nodes a direita os elemento movidos sao todos que estao na sub-arvore a direita + o ptr
+			else mov+=ptr->itemCount; //se não houver Node a direita, move-se apenas o ptr
+			ptr = ptr->left; //desloca o ptr para a o Node da esquerda pois elem < ptr->elem
+			continue;  //pula o resto dos comandos e volta a executar o loop do inicio
+		} else if(elem > ptr->elem){ //verifica se o elem é maior que o que esta no elemento de ptr
+			ptr = ptr->right; //se o elemento é maior que ptr->elem, ainda não precisa mover nenhum numero. apenas desloca o ptr
 			continue;
 		} else if(elem == ptr->elem){
+			//se o elemento é igual a um ja existente, apenas move todos os elementos que estao na sub-arvore a direita desse elemento
 			if(ptr->right) mov+=ptr->right->subTreeSize;
 			break;
 		}

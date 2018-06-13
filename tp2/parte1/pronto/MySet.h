@@ -13,8 +13,8 @@ class Node {
 	public: //classe auxiliar.. vamos utiliza-la apenas neste arquivo (nao e' muito necessario ter encapsulamento)
 		Node(const T &elem_) : elem(elem_),left(NULL), right(NULL), itemCount(1), subTreeSize(1) {}
 		Node<T> *left, *right;
-		int itemCount;
-		int subTreeSize;
+		long long int itemCount;
+		long long int subTreeSize;
 		T elem;
 };
 

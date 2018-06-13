@@ -92,7 +92,7 @@ MySet<T>::MySet(const MySet<T> &other){
 template<class T>
 void MySet<T>::destroy(Node<T> *root){
 	if(root == NULL) return;
-	cout << "aaaaaaaaloy" << endl;
+	
 	destroy(root->right);
 	destroy(root->left);
 	delete root;
