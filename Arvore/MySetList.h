@@ -1,5 +1,11 @@
 //Conjunto + Arvore Binaria de Pesquisa (ABP)
 
+//Custo de remoção/inserção:   , O(h)
+//Custo de pesquisa: O(h)
+//Calcular altura: O(n)
+//Uma arvore é balanceada qnd um nodo tem no max 1 de altura maior q o outro
+
+
 #ifndef MYSETLIST_H
 #define MYSETLIST_H
 
