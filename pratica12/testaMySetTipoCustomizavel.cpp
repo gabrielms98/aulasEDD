@@ -33,7 +33,6 @@ public:
 private:
 	string nome;
 	int matricula;
-	MySet<pair<string, int> > aluno;
 };
 
 
