@@ -23,7 +23,7 @@ int main(){
       //cout << converte(cpf[j]) << "*" << nPrimeiro << endl;
       nPrimeiro--;
     }
-    cout << somaP << endl;
+    //cout << somaP << endl;
     int primeiro = ((10*somaP) % 11)%10;
     int nSegundo =11;
     for(int k=0; k<9; k++){
@@ -32,7 +32,7 @@ int main(){
       nSegundo--;
     }
     somaS+=primeiro*2;
-    cout << somaS << endl;
+    //cout << somaS << endl;
     int segundo = (somaS*10)%11;
 
     cout << setfill('0') << setw(2) << primeiro*10+segundo << endl;
