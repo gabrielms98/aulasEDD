@@ -26,7 +26,7 @@ void insert(const Color cor);
 
 private:
   Node *root;
-
+  
 };
 
 

@@ -12,24 +12,25 @@ using namespace std;
 //Implemente seu trabalho a partir daqui... (crie outros arquivos .h/.cpp se necessario)
 #include "quadTree.h"
 
+void geraQuadTree(QuadTree &set, PPMImage &img, int x, int y);
 
 
 int main(int argc,char**argv) {
 
-if(argv[1] == "comprimir"){
-  QuadTree quadSet;
-  string st;
-  cin >> st;
+  if((string)argv[1] == "comprimir"){
+    QuadTree quadSet;
+    PPMImage img;
+    cin >> img;
 
-  int m, n, brilho;
-  cin >> m >> n >> brilho;
-
-  int r, g, b;
-  while(cin >> r >> g >> b){
-    Color cor(r, g, b);
-    quadSet.insert(cor);
+    QuadTree quadTree;
+    //geraQuadTree(quadTree,img,img.getRows(), img.getColumns());
     
+
   }
+
+
 }
+
+void geraQuadTree(QuadTree &set, PPMImage &img, int x, int y){
 
 }
