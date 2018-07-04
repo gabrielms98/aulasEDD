@@ -10,9 +10,9 @@ class QuadIterator;
 class Node{
 public:
   Node(const Color rgb)
-    : cor(rgb), zero(NULL), um(NULL), dois(NULL), tres(NULL), pai(NULL) {}
+    : cor(rgb), zero(NULL), um(NULL), dois(NULL), tres(NULL), parent(NULL) {}
   Node *zero, *um, *dois, *tres;
-  Node *pai;
+  Node *parent;
   Color cor;
 };
 
@@ -20,13 +20,21 @@ public:
 class QuadTree{
   friend class QuadIterator;
 public:
+  QuadTree() : root(NULL) {}
 
-int size() const;
-void insert(const Color cor);
+  int getSize() const {return size;}
+  Node *insert(const Color cor, const int quadrante, Node *pai);
+
+  void imprime(int size, int brilho) const;
+  void print() const;
 
 private:
+  Node *insert(const Color cor, Node * &root, Node *parent, const int quadrante);
+  void imprime(const Node *ptr) const;
+  void print(const Node *ptr) const;
+
   Node *root;
-  
+  int size;
 };
 
 

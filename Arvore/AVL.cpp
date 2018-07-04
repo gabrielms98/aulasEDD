@@ -14,6 +14,7 @@ int Node<T>::altura(const Node<T> *root) const{
 
 template<class T>
 bool MySet<T>::checkIfAVL(const Node<T> *root, int &h, bool printFB) const{
+  //O(n*n)
   // if(root==NULL) return true;
   // int fb = altura(root->right)-altura(root->left);
   // if(printFB) cerr << root->elem << " " << fb << endl;

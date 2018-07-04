@@ -25,8 +25,8 @@ public:
 	PPMImage() {}
 	PPMImage(int rows_, int columns_,int max_intensity)  {
 		init(rows_,columns_,max_intensity);
-	}  
-	 
+	}
+
 	void set(int y,int x, const Color &c) { //define a cor do pixel (y,x) como sendo c
 		image[y][x] = c;
 	}
@@ -37,10 +37,10 @@ public:
 	int getColumns() const {return columns;}
 	int getMaxCol() const {return mxIntensity;}
 
-	//a "subimagem" que esta na regiao definida pelos limitantes (yMin,xMin) e (yMin+size-1, xMin+size-1) e' 
-	//"uniforme" ? 
+	//a "subimagem" que esta na regiao definida pelos limitantes (yMin,xMin) e (yMin+size-1, xMin+size-1) e'
+	//"uniforme" ?
 	//Retorna true <-> se for uniforme
-	//Se a regiao for uniforme, representingColor e' uma cor que "representa" essa regiao 
+	//Se a regiao for uniforme, representingColor e' uma cor que "representa" essa regiao
 	//Essa funcao e' razoavel, mas certamente ha muitas funcoes que podem decidir melhor como comprimir uma quadtree
 	//Por exemplo, a "media das cores" conforme esta sendo calculada nao faz muito sentido.
 	//Obs: voce DEVE utilizar a funcao isUniform no trabalho pratico!!!! (exceto para a parte extra do trabalho)
