@@ -58,14 +58,14 @@ bool PPMImage::isUniform(int yMin,int xMin, int size, Color &representingColor) 
 	int ma[3] = {0};
 
 	map<array<int,3> ,int> s;
-	for(int i=yMin;i<yMin+size;i++) //mi e max vao representar 
+	for(int i=yMin;i<yMin+size;i++) //mi e max vao representar
 		for(int j=xMin;j<xMin+size;j++) {
 			avg[0] += get(i,j).r;
 			avg[1] += get(i,j).g;
 			avg[2] += get(i,j).b;
 
 			s[{get(i,j).r/10,get(i,j).g/10,get(i,j).b/10}]++; //mapeia as cores para um numero menor de cores distintas
-			
+
 			mi[0] = min(mi[0],get(i,j).r);
 			mi[1] = min(mi[1],get(i,j).g);
 			mi[2] = min(mi[2],get(i,j).b);
@@ -91,4 +91,3 @@ bool PPMImage::isUniform(int yMin,int xMin, int size, Color &representingColor) 
 		}
 	return (countCloseToAvg >= size*size*0.97); //pelo menos 97% dos pixels estao "perto da media"
 }
-

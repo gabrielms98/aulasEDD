@@ -14,7 +14,7 @@ using namespace std;
 //filhos sao os elementos na pos: 2i+1 e 2i+2
 //pai: (i-1)/2
 //elemento de MAIOR prioiridade é o primeiro elemento
-//apagar e inserir eh maior rapido em um heap do q em vector
+//apagar e inserir eh mais rapido em um heap do q em vector
 //remover elemento -> MoveDown O(log(n))
 //inserir -> MoveUp O(log(n))
 
@@ -74,11 +74,9 @@ void MyPriorityQueue<T>::push(const T &el){
 
 template<class T>
 void MyPriorityQueue<T>::pop(){
-  // NAO SEI SE ESTA CERTO
-  heap.erase(heap[0]);
-  heap.push_front(heap[size()-1]);
-  heap.erase(heap[size()-1]);
-  moveDown(heap[0]);
+  swap(heap[heap.size()-1],heap[0]); //pega o ultimo elemento do heap e coloca-o na primeira posicao
+	heap.resize(heap.size()-1); //reduz o tamanho do heap
+	moveDown(0); //restaura as propriedades de heap a partir da posicao 0
 }
 
 #endif

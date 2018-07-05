@@ -15,11 +15,11 @@ int Node<T>::altura(const Node<T> *root) const{
 template<class T>
 bool MySet<T>::checkIfAVL(const Node<T> *root, int &h, bool printFB) const{
   //O(n*n)
-  // if(root==NULL) return true;
-  // int fb = altura(root->right)-altura(root->left);
-  // if(printFB) cerr << root->elem << " " << fb << endl;
-  // if(abs(fb)>1) return false;
-  // return checkIfAVL(root->right, h, printFB) && checkIfAVL(root->left, h, printFB);
+  if(root==NULL) return true;
+  int fb = altura(root->right)-altura(root->left);
+  if(printFB) cerr << root->elem << " " << fb << endl;
+  if(abs(fb)>1) return false;
+  return checkIfAVL(root->right, h, printFB) && checkIfAVL(root->left, h, printFB);
 
   //outro jeito de fazer
   //mais rapido pq n chama  func altura
